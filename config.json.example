@@ -20,6 +20,9 @@
   "headless" : false,
   "mute_audio": false,
   "chrome_type": "google-chrome",
+  
+  "enable-cam": false,
+  "enable-mic": false,
 
   "blacklist": [
     {
