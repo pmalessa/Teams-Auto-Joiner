@@ -114,13 +114,14 @@ class Channel:
 
 
 class Meeting:
-    def __init__(self, m_id, time_started, title, calendar_meeting=False, channel_id=None):
+    def __init__(self, m_id, time_started, title, calendar_meeting=False, channel_id=None, time_end):
         self.m_id = m_id
         self.time_started = time_started
         self.title = title
         self.calendar_meeting = calendar_meeting
         self.calendar_blacklisted = calendar_meeting and self.check_blacklist_calendar_meeting()
         self.channel_id = channel_id
+        self.time_end = time_end
 
     def check_blacklist_calendar_meeting(self):
         if "blacklist_meeting_re" in config and config['blacklist_meeting_re'] != "":
@@ -330,6 +331,8 @@ def get_meetings(teams):
                 for meeting_elem in meeting_elems:
                     meeting_id = meeting_elem.get_attribute("id")
                     time_started = int(meeting_id.replace("m", "")[:-3])
+                    print(meeting_id)
+                    print(time_started)
 
                     # already joined calendar meeting
                     correlation_id = meeting_elem.find_element_by_css_selector(
@@ -338,7 +341,7 @@ def get_meetings(teams):
                         continue
 
                     meetings.append(
-                        Meeting(meeting_id, time_started, f"{team.name} -> {channel.name}", channel_id=channel.c_id))
+                        Meeting(m_id=meeting_id, time_started=time_started, title=f"{team.name} -> {channel.name}", channel_id=channel.c_id, time_end=0))
 
 
 def get_calendar_meetings():
@@ -373,7 +376,7 @@ def get_calendar_meetings():
 
         meeting_id = sec_meeting_card.get_attribute("id")
 
-        meetings.append(Meeting(meeting_id, start_time, meeting_name, calendar_meeting=True))
+        meetings.append(Meeting(m_id=meeting_id, time_started=start_time, title=meeting_name, calendar_meeting=True, time_end=0))
 
 
 def decide_meeting():
@@ -750,6 +753,7 @@ def main():
             members_count = get_meeting_members()
             if members_count and members_count > total_members:
                 total_members = members_count
+            if members_count < 2 and current_meeting
 
         if "leave_if_last" in config and config['leave_if_last'] and interval_count % 5 == 0 and interval_count > 0:
             if current_meeting is not None and members_count is not None and total_members is not None:
