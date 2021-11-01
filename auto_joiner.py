@@ -114,7 +114,7 @@ class Channel:
 
 
 class Meeting:
-    def __init__(self, m_id, time_started, title, calendar_meeting=False, channel_id=None, time_end):
+    def __init__(self, m_id, time_started, title, calendar_meeting=False, channel_id=None, time_end=-1):
         self.m_id = m_id
         self.time_started = time_started
         self.title = title
@@ -341,7 +341,7 @@ def get_meetings(teams):
                         continue
 
                     meetings.append(
-                        Meeting(m_id=meeting_id, time_started=time_started, title=f"{team.name} -> {channel.name}", channel_id=channel.c_id, time_end=0))
+                        Meeting(m_id=meeting_id, time_started=time_started, title=f"{team.name} -> {channel.name}", channel_id=channel.c_id, time_end=-1))
 
 
 def get_calendar_meetings():
@@ -376,7 +376,7 @@ def get_calendar_meetings():
 
         meeting_id = sec_meeting_card.get_attribute("id")
 
-        meetings.append(Meeting(m_id=meeting_id, time_started=start_time, title=meeting_name, calendar_meeting=True, time_end=0))
+        meetings.append(Meeting(m_id=meeting_id, time_started=start_time, title=meeting_name, calendar_meeting=True, time_end=-1))
 
 
 def decide_meeting():
