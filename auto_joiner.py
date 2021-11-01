@@ -598,7 +598,7 @@ def handle_leave_threshold(current_meeting_members, total_meeting_members):
             hangup()
             return True
 
-    if 0 < current_meeting_members < 3:
+    if current_meeting_members < 2 and total_meeting_members > 1: #if someone already joined meeting and I'm now the last attendee
         print("Last attendee in meeting")
         discord_notification("Left meeting, last member", f"{current_meeting.title}")
         hangup()
