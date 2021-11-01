@@ -360,6 +360,7 @@ def get_calendar_meetings():
         meeting_card = join_button.find_element_by_xpath("../../..")
         meeting_cards.append(meeting_card)
 
+    print("Found "+str(len(meeting_cards))+"calendar meetings")
     for meeting_card in meeting_cards:
         style_string = meeting_card.get_attribute("style")
         top_offset = float(style_string[style_string.find("top: ") + 5:style_string.find("rem;")])
@@ -375,8 +376,9 @@ def get_calendar_meetings():
         meeting_name = sec_meeting_card.get_attribute("title").replace("\n", " ")
 
         meeting_id = sec_meeting_card.get_attribute("id")
-
-        meetings.append(Meeting(m_id=meeting_id, time_started=start_time, title=meeting_name, calendar_meeting=True, time_end=-1))
+        time_end = -1
+        print("Meetings: id={}, start={}, title={}, end={}".format(str(meeting_id),str(start_time),str(meeting_name),str(time_end)))
+        meetings.append(Meeting(m_id=meeting_id, time_started=start_time, title=meeting_name, calendar_meeting=True, time_end=time_end))
 
 
 def decide_meeting():
@@ -761,7 +763,7 @@ def main():
                     total_members = None
 
         interval_count += 1
-
+        sys.stdout.flush()
         time.sleep(check_interval)
 
 
