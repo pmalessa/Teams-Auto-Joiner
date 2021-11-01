@@ -753,7 +753,7 @@ def main():
             members_count = get_meeting_members()
             if members_count and members_count > total_members:
                 total_members = members_count
-            if members_count < 2 and current_meeting
+            #if members_count < 2 and current_meeting
 
         if "leave_if_last" in config and config['leave_if_last'] and interval_count % 5 == 0 and interval_count > 0:
             if current_meeting is not None and members_count is not None and total_members is not None:
