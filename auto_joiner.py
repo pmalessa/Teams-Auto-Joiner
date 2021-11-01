@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+import os
+import sys
 import json
 import random
 import re
@@ -132,7 +135,7 @@ class Meeting:
 
 def load_config():
     global config
-    with open('config.json', encoding='utf-8') as json_data_file:
+    with open(os.path.dirname(sys.argv[0])+'/config.json', encoding='utf-8') as json_data_file:
         config = json.load(json_data_file)
 
 
